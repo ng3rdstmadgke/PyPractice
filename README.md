@@ -1,0 +1,2 @@
+# PyPractice
+Pythonの練習
