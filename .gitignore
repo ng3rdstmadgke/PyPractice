@@ -55,3 +55,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+### 20151206 Pycharm ignore
+.idea/
+
