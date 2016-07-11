@@ -23,8 +23,8 @@ class PrimaryTest(object):
                 if self.judge_primary(num, primary_list) is False:
                     judge = False
                     break
-
-        return judge, primary_list
+        return judge
+        # return judge, primary_list
 
     def judge_primary(self, num, primary_list):
         """
@@ -55,6 +55,7 @@ class PrimaryTest(object):
 
 if __name__ == "__main__":
     ins = PrimaryTest()
-    judge, plist = ins.main(333333333331)
+    # judge, plist = ins.main(333333333331)
+    judge = ins.main(333333333331)
     print(judge)
     print(plist)

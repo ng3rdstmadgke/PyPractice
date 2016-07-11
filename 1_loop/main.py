@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 def main(num):
+    ret = ""
     for i in range(num):
-        ret = "{} : Hellow World!!".format(i + 1)
-        print(ret)
+        ret += "{} : Hellow World!!".format(i + 1)
+        ret += "\n"
+
+    return ret
 
 if __name__=="__main__":
-    main(10)
+    hello = main(10)
+    print(hello)
