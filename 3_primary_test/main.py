@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import os.path
 
 class PrimaryTest(object):
     def __init__(self):
@@ -12,17 +12,19 @@ class PrimaryTest(object):
         :return: 判定(bool)と判定に使った素数のリスト(list)
         """
         self.validation(num)
-        primary_list = [2]
+        primary_list = []
         judge = True
         if num == 2:
             judge = True
-            return judge
-        for i in range(2, num):
-            if self.judge_primary(i, primary_list) is True:
-                primary_list.append(i)
-                if self.judge_primary(num, primary_list) is False:
-                    judge = False
-                    break
+        elif num % 2 == 0:
+            judge = False
+        else:
+            for i in range(2, num):
+                if self.judge_primary(i, primary_list) is True:
+                    primary_list.append(i)
+                    if self.judge_primary(num, [primary_list[-1]]) is False:
+                        judge = False
+                        break
         return judge
         # return judge, primary_list
 
@@ -34,7 +36,8 @@ class PrimaryTest(object):
         :return: bool
         """
         for i in primary_list:
-            if num % i == 0:
+            prime = int(i)
+            if num % prime == 0:
                 return False
         return True
 
@@ -56,6 +59,6 @@ class PrimaryTest(object):
 if __name__ == "__main__":
     ins = PrimaryTest()
     # judge, plist = ins.main(333333333331)
-    judge = ins.main(333333333331)
+    judge = ins.main(1021)
     print(judge)
-    print(plist)
+    # print(plist)
