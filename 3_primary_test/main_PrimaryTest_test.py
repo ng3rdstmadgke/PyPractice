@@ -29,7 +29,6 @@ class MyTestCase(unittest.TestCase):
             ret = self.ins.main(i)
             self.assertEqual(ret, True)
 
-
     def test_main_False(self):
         for i in [4, 12, 1023, 15763]:
             ret = self.ins.main(i)
