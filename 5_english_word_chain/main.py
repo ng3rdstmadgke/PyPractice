@@ -51,7 +51,8 @@ class WordChain(object):
                 if ret[1] != 0:
                     break
 
-        self.judge(ret)
+        message = self.judge(ret)
+        print(message)
 
     def user_input(self):
         """
@@ -116,14 +117,14 @@ class WordChain(object):
         word_length = len(self.ins.fetch_used_words_list())
         if ret[1] == 1:
             message = "まいりました！あなたの勝ちです。今回のしりとりでは {} 個の単語を使用しました。".format(word_length)
-            print(message)
+            return message
         elif ret[1] == 2:
             message = "しりとりルール違反です。私の勝ちです。今回のしりとりでは {} 個の単語を使用しました。".format(word_length)
-            print(message)
+            return message
         else:
             player = self.ins.search_player_which_use_the_word(self.turn, ret[0])
             message = "その言葉は {} 回目に {} が使用しています。わたしの勝ちです。今回のしりとりでは {} 個の単語を使用しました。".format(player[1], player[0], word_length)
-            print(message)
+            return message
 
 
 class DBUtil(object):
