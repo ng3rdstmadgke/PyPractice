@@ -99,6 +99,70 @@ class MyTestCase(unittest.TestCase):
             ret = wordchain.user_turn()
         self.assertEqual(ret, ["hello", 3])
 
+    def test_main_cpu_turn_break_cpu_turn(self):
+        mock_dbutil = mock.MagicMock()
+        mock_dbutil._select_all_from_dictionary.return_value=[("1", "hello", "h", "o")]
+        with mock.patch("random.choice", side_effect=["CPU", "hello"]), \
+            mock.patch("main.DBUtil", return_value=mock_dbutil), \
+            mock.patch("main.WordChain.user_turn", return_value=["optimal", 0]), \
+            mock.patch("main.WordChain.cpu_turn", return_vaule=["", 1]), \
+            mock.patch("main.WordChain.judge", return_value="winner user"):
+            wordchain = WordChain("test_dictionary.txt")
+            ret = wordchain.main()
+        self.assertEqual(ret, "winner user")
+
+    def test_main_cpu_turn_break_user_turn(self):
+        mock_dbutil = mock.MagicMock()
+        mock_dbutil._select_all_from_dictionary.return_value=[("1", "hello", "h", "o")]
+        def mock_judge(ret_value):
+            print(ret_value)
+            if ret_value[1] == 2:
+                return "OK"
+            else:
+                return "NG"
+        with mock.patch("random.choice", side_effect=["CPU", "hello"]), \
+            mock.patch("main.DBUtil", return_value=mock_dbutil), \
+            mock.patch("main.WordChain.user_turn", return_value=["optimal", 2]), \
+            mock.patch("main.WordChain.judge", side_effect=mock_judge):
+            wordchain = WordChain("test_dictionary.txt")
+            ret = wordchain.main()
+        self.assertEqual(ret, "OK")
+
+    def test_main_user_turn_break_cpu_turn(self):
+        mock_dbutil = mock.MagicMock()
+        mock_dbutil.confirm_word_in_dictionary.side_effect=[False, True]
+        with mock.patch("random.choice", return_value="USER"), \
+            mock.patch("builtins.input", return_value="hello"), \
+            mock.patch("main.DBUtil", return_value=mock_dbutil), \
+            mock.patch("main.WordChain.cpu_turn", return_vaule=["", 1]), \
+            mock.patch("main.WordChain.judge", return_value="winner user"):
+            wordchain = WordChain("test_dictionary.txt")
+            ret = wordchain.main()
+        self.assertEqual(ret, "winner user")
+
+    def test_main_user_turn_break_user_turn(self):
+        mock_dbutil = mock.MagicMock()
+        mock_dbutil.confirm_word_in_dictionary.side_effect=[False, True]
+        def mock_judge(ret_value):
+            print(ret_value[1])
+            if ret_value[1] == 3:
+                return "3"
+            elif ret_value[1] == 2:
+                return "2"
+            elif ret_value[1] == 1:
+                return "1"
+            else:
+                return "else"
+        with mock.patch("random.choice", return_value="USER"), \
+            mock.patch("main.WordChain.user_input", return_value="hello"), \
+            mock.patch("main.DBUtil", return_value=mock_dbutil), \
+            mock.patch("main.WordChain.cpu_turn", return_vaule=["else", 0]), \
+            mock.patch("main.WordChain.user_turn", return_value=["enter", 3]), \
+            mock.patch("main.WordChain.judge", side_effect=mock_judge):
+            wordchain = WordChain("test_dictionary.txt")
+            ret = wordchain.main()
+        self.assertEqual(ret, "OK")
+
 
 if __name__ == '__main__':
     unittest.main()

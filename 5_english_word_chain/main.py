@@ -20,7 +20,6 @@ class WordChain(object):
         しりとりを実行する
         :return: -
         """
-        flg = 0
         if self.turn == "USER":
             while True:
                 input_word = self.user_input()
@@ -52,7 +51,7 @@ class WordChain(object):
                     break
 
         message = self.judge(ret)
-        print(message)
+        return message
 
     def user_input(self):
         """
@@ -286,4 +285,5 @@ class DBUtil(object):
 
 if __name__ == "__main__":
     ins = WordChain("dictionary.txt")
-    ins.main()
+    message = ins.main()
+    print(message)
