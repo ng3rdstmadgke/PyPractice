@@ -16,5 +16,5 @@ Caesar暗号についてはシーザー暗号-wikipediaを参照してくださ�
 
 ■方針
 ・mapperを一文字ずらすメソッド(round_mapper)
-・mapperをベースに文字列を変換するメソッド
+・mapperをベースに文字列を変換するメソッド(_decode_text_gen)
 ・変換した文字列を評価するメソッド(形態素解析、personが入っているか)
