@@ -38,4 +38,4 @@ def gasket(n, t):
 if __name__ == "__main__":
     t = Turtle()
     #element(t)
-    gasket(7, t)
+    gasket(5, t)
