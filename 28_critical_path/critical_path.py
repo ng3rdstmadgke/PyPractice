@@ -10,28 +10,36 @@ class CriticalPath(object):
         self.nodes_status = [[self.alphabet_list[i], 0, 0, 0] for i in range(self.nodes_num)]
 
     def __earliest_node_time(self):
+        # 各ノードの最早結合点時刻を調べる
         for node_i in range(1, self.nodes_num):
             node = self.alphabet_list[node_i]
             node_time_list = []
+            # "diagram"の行先ノードが"node"であったら、行先ノードの結合点時刻を算出する
             for diagram_i in self.diagram:
                 if diagram_i[1] == node:
-                    src_node = self.alphabet_list.index(diagram_i[0])
-                    src_node_time = self.nodes_status[src_node][1]
+                    src_node_name = self.alphabet_list.index(diagram_i[0])
+                    src_node_time = self.nodes_status[src_node_name][1]
                     node_time = src_node_time + diagram_i[2]
                     node_time_list.append(node_time)
+            # もっとも大きい結合点時刻を最早結合点時刻としてnodes_statusに登録する
             self.nodes_status[node_i][1] = max(node_time_list)
 
     def __latest_node_time(self):
+        # 最後のノードの最遅結合点時刻に最早結合点時刻を登録する
         self.nodes_status[-1][2] = self.nodes_status[-1][1]
+
+        # 各ノードの最遅結合点時刻を調べる
         for node_i in range(self.nodes_num - 1)[::-1]:
             node = self.alphabet_list[node_i]
             node_time_list = []
+            # "diagram"の出発ノードが"node"であったら、出発ノードの結合点時刻を算出する
             for diagram_i in self.diagram:
                 if diagram_i[0] == node:
-                    src_node = self.alphabet_list.index(diagram_i[1])
-                    src_node_time = self.nodes_status[src_node][2]
-                    node_time = src_node_time - diagram_i[2]
+                    next_node_name = self.alphabet_list.index(diagram_i[1])
+                    next_node_time = self.nodes_status[next_node_name][2]
+                    node_time = next_node_time - diagram_i[2]
                     node_time_list.append(node_time)
+            # もっとも小さい結合点時刻を最遅結合点時刻としてnodes_statusに登録する
             self.nodes_status[node_i][2] = min(node_time_list)
 
     def __margin(self):
@@ -54,9 +62,21 @@ class CriticalPath(object):
         return critical_path
 
 if __name__ == "__main__":
-    nodes = 7
-    works = 9
-    diagram = [['A', 'B', 10], ['A', 'C', 3], ['B', 'D', 4], ['B', 'E', 7], ['C', 'D', 7], ['C', 'F', 9], ['D', 'E', 2], ['E', 'G', 1], ['F', 'G', 7]]
+    import os
+    file = os.path.dirname(os.path.abspath(__name__)) + "/input.txt"
+    with open(file, "rt") as f:
+        data = f.read()
+    input_list = data.split("\n")
+    for i in range(len(input_list)):
+        input_list[i] = input_list[i].split(" ")
+        if i == 0:
+            input_list[i][0] = int(input_list[i][0])
+            input_list[i][1] = int(input_list[i][1])
+        else:
+            input_list[i][2] = int(input_list[i][2])
+    nodes = input_list[0][0]
+    works = input_list[0][1]
+    diagram = input_list[1:]
     ins = CriticalPath(nodes, works, diagram)
     ret = ins.critical_path()
     p = " -> ".join(ret[1:])
