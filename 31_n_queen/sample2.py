@@ -14,8 +14,11 @@ def check(q_map, cnt):
             if pre_x == x or y - pre_y == abs(x - pre_x):
                 return False
         return True
+    else:
+        return True
 
 def n_queen(q_map, cnt=0, ret=[]):
+
     # cnt-1の"Q"がそれより以前に配置した"Q"の進行方向に配置されていないか確認。
     # 他の"Q"の進行方向上に配置されていたら以降の再帰を中止する。
     if check(q_map, cnt-1) is False:
@@ -31,7 +34,7 @@ def n_queen(q_map, cnt=0, ret=[]):
     return ret
 
 if __name__ == "__main__":
-    n = 7
+    n = 8
     qm = ["None" for i in range(n)]
     ret = n_queen(qm)
 

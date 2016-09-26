@@ -24,7 +24,7 @@ def n_queen(q_list, ret=[], cnt=0):
     return ret
 
 if __name__ == "__main__":
-    n = 7
+    n = 8
     sample = [0 for _ in range(n)]
     ret = n_queen(sample)
 
