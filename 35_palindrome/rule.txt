@@ -1,0 +1,18 @@
+"N","O","*"の何れかで構成された文字列を受取り、"*"は"N"か"O"に変換して回文を作成する関数。
+
+ただし"N"の変換には10円、"O"の変換には15円かかるものとする。
+できるだけ総額が安くなるように回文を作成し、「回文」と「かかった金額」を返却すること。
+※返却型は配列でも、クラスや構造体でもよいが["回文",かかった金額]とする
+
+＜条件＞
+
+作成できない場合、回文は「受け取った文字列」金額は「-1」を返却すること。
+ソースは可能な限りシンプルに記述すること。
+使用する言語は何でもよい。
+疑似コード例
+
+public static object[] ToPalindrome(string src){略};~
+ToPalindromically("NOO*");  //return["NOON",10]~
+ToPalindromically("NO*N");  //return["NOON",15]~
+ToPalindromically("NO");    //return["NO",-1]~
+ToPalindromically("O*O");   //return["ONO",10]~
