@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from turtle import *
+from turtle import Turtle
 
 def element(t):
     for i in range(2):
